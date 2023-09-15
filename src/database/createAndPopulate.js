@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "ARTESAO" (
         "EMAIL_ARTESAO" varchar(255) PRIMARY KEY,
         "TELEFONE" varchar(11),
         "TIPODEARTE" varchar(255),
-        "BIO" varchar(255),
+        "BIO" varchar(255)
     );
 `
 
@@ -25,8 +25,8 @@ CREATE TABLE IF NOT EXISTS "PRODUTO" (
         "NOME" varchar(255),
         "DESCRICAO" varchar(255),
         "PRECO" REAL,
-        "QTDESTOQUE" INTEGER
-        "EMAIL_ARTESAO" INTEGER,
+        "QTDESTOQUE" INTEGER,
+        "EMAIL_ARTESAO" varchar(255),
         FOREIGN KEY (EMAIL_ARTESAO) REFERENCES PRODUTO(EMAIL_ARTESAO)
     );
 `
@@ -104,10 +104,10 @@ VALUES
 `
 
 const ADD_ARTESAO_DATA = `
-INSERT INTO ARTESAO (NOME, EMAIL, TELEFONE, TIPODEARTE, BIO)
+INSERT INTO ARTESAO (NOME, EMAIL_ARTESAO, TELEFONE, TIPODEARTE, BIO)
 VALUES
     ('lauren martins', 'lauren_martins@bol.com', '214837911', 'artesanato', ' Uma artesã talentosa que transforma sua criatividade em belas obras de arte. Seu amor pela arte se reflete em cada peça única que ela cria. Inspirada pela natureza e cores vibrantes, Lauren traz vida a objetos comuns por meio de seu dom artístico.'),
-    ('pan conçalves', 'pan_conçalves@gmail.com', '4140028297), 'pintora', 'Uma pintora apaixonada por cores e formas, que utiliza sua paleta de cores para criar obras de arte que cativam e emocionam. Com traços expressivos e uma mente criativa, Pan explora os limites da pintura, trazendo à vida suas visões únicas e vibrantes em cada tela. Sua jornada artística é uma celebração da criatividade e da expressão pessoal.'),
+    ('pan conçalves', 'pan_conçalves@gmail.com', '4140028297', 'pintora', 'Uma pintora apaixonada por cores e formas, que utiliza sua paleta de cores para criar obras de arte que cativam e emocionam. Com traços expressivos e uma mente criativa, Pan explora os limites da pintura, trazendo à vida suas visões únicas e vibrantes em cada tela. Sua jornada artística é uma celebração da criatividade e da expressão pessoal.'),
     ('léo zeira', 'léo_zeira@yahoo.com', '2164214430', 'literatura', 'Um autor literário que desafia as convenções e mergulha profundamente nas águas da literatura experimental. Com sua prosa ousada e estilo narrativo não convencional, Léo Zeira cria histórias que desafiam as expectativas e convidam os leitores a explorar novos territórios literários. Sua abordagem única e corajosa para a escrita o torna um destaque na cena literária contemporânea, onde a inovação e a criatividade são valorizadas. Em suas palavras, a literatura se transforma em uma jornada intrigante e imprevisível, mantendo os leitores ansiosos por cada página.')
 `
 
