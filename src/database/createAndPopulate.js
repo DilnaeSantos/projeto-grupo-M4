@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS "PRODUTO" (
         "PRECO" REAL,
         "QTDESTOQUE" INTEGER,
         "EMAIL_ARTESAO" varchar(255),
-        FOREIGN KEY (EMAIL_ARTESAO) REFERENCES PRODUTO(EMAIL_ARTESAO)
+        FOREIGN KEY (EMAIL_ARTESAO) REFERENCES ARTESAO(EMAIL_ARTESAO)
     );
 `
 
@@ -147,37 +147,37 @@ function populaTabelas() {
 
     Database.run(ADD_ARTESAO_DATA, (error)=> {
         if (error) {
-         console.log("Erro ao popular tabela de Usuários")
+         console.log("Erro ao popular tabela de Artesao")
          }
          else {
-             console.log("Tabela Usuários populada com sucesso!")
+             console.log("Tabela Artesao populada com sucesso!")
          }
      });
 
      Database.run(ADD_PRODUTO_DATA, (error)=> {
         if (error) {
-         console.log("Erro ao popular tabela de Usuários")
+         console.log("Erro ao popular tabela de Produto")
          }
          else {
-             console.log("Tabela Usuários populada com sucesso!")
+             console.log("Tabela Produto populada com sucesso!")
          }
      });
 
      Database.run(ADD_ENDERECO_DATA, (error)=> {
         if (error) {
-         console.log("Erro ao popular tabela de Usuários")
+         console.log("Erro ao popular tabela de Endereço")
          }
          else {
-             console.log("Tabela Usuários populada com sucesso!")
+             console.log("Tabela Endereço populada com sucesso!")
          }
      });
 
      Database.run(ADD_UNIDADE_DATA, (error)=> {
         if (error) {
-         console.log("Erro ao popular tabela de Usuários")
+         console.log("Erro ao popular tabela de Unidade")
          }
          else {
-             console.log("Tabela Usuários populada com sucesso!")
+             console.log("Tabela Unidade populada com sucesso!")
          }
      });
 }
