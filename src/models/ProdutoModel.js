@@ -1,8 +1,8 @@
-/**Modelo para artesões */
+/**Modelo para produto */
 
 class ProdutoModel {
     /**
-       * Construtor do model para artesãos
+       * Construtor do model para produto
        * @param {string} nome 
        * @param {string} descricao 
        * @param {string} preco 
