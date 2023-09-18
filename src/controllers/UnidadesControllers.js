@@ -61,3 +61,26 @@ class UnidadesController {
             res.status(400).json({ error: true, message: `Campos inválidos` });
         }
     });
+    // Rota para atualizar uma unidade pelo ID
+    app.put("/unidades/:id", async (req, res) => {
+        const id = req.params.id;
+        const { nome, IdEndereco } = req.body;
+        const exists = await ValidacaoServices.validarExistenciaUnidade(id);
+        const isValid = ValidacaoServices.validaCamposUnidade(nome, IdEndereco);
+
+        if (exists) {
+            if (isValid) {
+                const unidadeModelada = new UnidadesModel(nome, IdEndereco);
+                UnidadesDAO.atualizarUnidadePorId(id, unidadeModelada);
+                res.status(204).json();
+            } else {
+                res.status(400).json({ error: true, message: `Campos inválidos` });
+            }
+        } else {
+            res.status(404).json({ error: true, message: `Unidade não encontrada para o id ${id}` });
+        }
+    });
+}
+}
+
+export default UnidadesController;
