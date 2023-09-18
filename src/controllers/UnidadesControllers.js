@@ -31,3 +31,15 @@ class UnidadesController {
             res.status(400).json({ error: true, message: `ID de unidade inválido: ${id}` });
         }
     });
+    // Rota para deletar uma unidade pelo ID
+    app.delete("/unidades/:id", async (req, res) => {
+        const id = req.params.id;
+        const isValid = await ValidacaoServices.validarExistenciaUnidade(id);
+
+        if (isValid) {
+            UnidadesDAO.deletarUnidadePorId(id);
+            res.status(200).json({ error: false });
+        } else {
+            res.status(404).json({ error: true, message: `Unidade não encontrada para o id ${id}` });
+        }
+    });
