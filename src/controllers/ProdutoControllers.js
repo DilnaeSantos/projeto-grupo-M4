@@ -40,10 +40,10 @@ class ProdutoController {
 
         app.post("/produtos", async (req, res) => {
             const body = req.body;
-            const isValid = ValidacaoServices.validaCamposProduto(...body);
+            const isValid = ValidacaoServices.validaCamposProduto(body.NOME, body.DESCRICAO, body.PRECO, body.QTDEESTOQUE, body.EMAILARTESAO);
 
             if (isValid) {
-                const produtoModelado = new ProdutoModel(...body);
+                const produtoModelado = new ProdutoModel(body.NOME, body.DESCRICAO, body.PRECO, body.QTDEESTOQUE, body.EMAILARTESAO);
 
                 try {
                     await ProdutoDAO.inserirProduto(produtoModelado);
@@ -63,7 +63,7 @@ class ProdutoController {
             const id = req.params.id;
             const body = req.body;
             const exists = await ValidacaoServices.validarExistenciaProduto(id);
-            const isValid = ValidacaoServices.validaCamposProduto((body.NOME, body.DESCRICAO, body.PRECO, body.QTDEESTOQUE, body.EMAILARTESAO);
+            const isValid = ValidacaoServices.validaCamposProduto(body.NOME, body.DESCRICAO, body.PRECO, body.QTDEESTOQUE, body.EMAILARTESAO);
 
             if (exists) {
                 if (isValid) {
@@ -80,4 +80,4 @@ class ProdutoController {
     }
 }
 
-export default ProdutoController
+export default ProdutoController;
