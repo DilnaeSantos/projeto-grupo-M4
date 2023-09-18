@@ -1,19 +1,19 @@
 import Database from "../database/Database.js";
 
-class DAO{
+class DAO {
     /**
      * Método de inserção de dados
      * @param {string} query 
      * @param {Array<any>} data 
      */
-    static inserir(query, data){
-        return new Promise((resolve, reject)=>{
-            Database.run(query, data, (error)=>{
-                if(error){
+    static inserir(query, data) {
+        return new Promise((resolve, reject) => {
+            Database.run(query, data, (error) => {
+                if (error) {
                     console.log(error)
                     reject(error)
                 }
-                resolve({error:false})
+                resolve({ error: false })
             })
         })
     }
@@ -23,10 +23,10 @@ class DAO{
      * @param {string} query
      * @returns {any}
      */
-    static buscar(query){
-        return new Promise((resolve, reject)=>{
-            Database.all(query, (error, rows)=>{
-                if(error){
+    static buscar(query) {
+        return new Promise((resolve, reject) => {
+            Database.all(query, (error, rows) => {
+                if (error) {
                     console.log(error)
                     reject(error)
                 } else {
@@ -44,15 +44,15 @@ class DAO{
      */
     static buscarPorId(query, id) {
         return new Promise((resolve, reject) => {
-        Database.get(query, id, (error, row) => {
-            if (error) {
-                  console.error(error);
-                  reject(error);
-              } else {
-                  resolve(row);
-              }
-          });
-      });
+            Database.get(query, id, (error, row) => {
+                if (error) {
+                    console.error(error);
+                    reject(error);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
     }
 
 
@@ -63,16 +63,16 @@ class DAO{
      * @returns {Promise<void>}
      */
     static deletarPorId(query, id) {
-      return new Promise((resolve, reject) => {
-          Database.run(query, id, function (error) {
-              if (error) {
-                  console.error(error);
-                  reject(error);
-              } else {
-                  resolve();
-              }
-          });
-      });
+        return new Promise((resolve, reject) => {
+            Database.run(query, id, function (error) {
+                if (error) {
+                    console.error(error);
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 
     /**
@@ -82,16 +82,16 @@ class DAO{
      * @returns {Promise<void>}
      */
     static atualizarPorId(query, id) {
-      return new Promise((resolve, reject) => {
-          Database.run(query, id, function (error) {
-              if (error) {
-                  console.error(error);
-                  reject(error);
-              } else {
-                  resolve();
-              }
-          });
-      });
+        return new Promise((resolve, reject) => {
+            Database.run(query, id, function (error) {
+                if (error) {
+                    console.error(error);
+                    reject(error);
+                } else {
+                    resolve();
+                }
+            });
+        });
     }
 
 }
