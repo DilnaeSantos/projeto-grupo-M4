@@ -43,3 +43,21 @@ class UnidadesController {
             res.status(404).json({ error: true, message: `Unidade não encontrada para o id ${id}` });
         }
     });
+    // Rota para inserir uma nova unidade
+    app.post("/unidades", async (req, res) => {
+        const { nome, IdEndereco } = req.body;
+        const isValid = ValidacaoServices.validaCamposUnidade(nome, IdEndereco);
+
+        if (isValid) {
+            const unidadeModelada = new UnidadesModel(nome, IdEndereco);
+
+            try {
+                await UnidadesDAO.inserirUnidade(unidadeModelada);
+                res.status(201).json({ error: false, message: "Unidade criada com sucesso" });
+            } catch (error) {
+                res.status(503).json({ error: true, message: `Servidor indisponível no momento` });
+            }
+        } else {
+            res.status(400).json({ error: true, message: `Campos inválidos` });
+        }
+    });
