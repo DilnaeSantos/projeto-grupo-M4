@@ -47,7 +47,7 @@ class EnderecoController {
 
         // Rota para inserir um novo endereço
         app.post("/enderecos", async (req, res) => {
-            const { cep, rua, numero, cidade, bairro } = req.body;
+            const body = Object.values(req.body)
             const isValid = ValidacaoServices.validaCamposEndereco(...body)
 
             if (isValid) {
@@ -67,7 +67,7 @@ class EnderecoController {
         // Rota para atualizar um endereço pelo ID
         app.put("/enderecos/:id", async (req, res) => {
             const id = req.params.id;
-            const { cep, rua, numero, cidade, bairro } = req.body;
+            const body = req.body;
             const exists = await ValidacaoServices.validarExistenciaEndereco(id);
             const isValid = ValidacaoServices.validaCamposEndereco(body.CEP, body.RUA, body.NUMERO, body.CIDADE, body.BAIRRO);
 
