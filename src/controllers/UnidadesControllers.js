@@ -45,11 +45,10 @@ class UnidadesController {
     });
     // Rota para inserir uma nova unidade
     app.post("/unidades", async (req, res) => {
-        const { nome, IdEndereco } = req.body;
-        const isValid = ValidacaoServices.validaCamposUnidade(nome, IdEndereco);
-
+        const body = Object.values(req.body)
+        const isValid = ValidacaoServices.validaCamposUnidade(...body);
         if (isValid) {
-            const unidadeModelada = new UnidadesModel(nome, IdEndereco);
+            const unidadeModelada = new UnidadesModel(...body);
 
             try {
                 await UnidadesDAO.inserirUnidade(unidadeModelada);
@@ -64,13 +63,13 @@ class UnidadesController {
     // Rota para atualizar uma unidade pelo ID
     app.put("/unidades/:id", async (req, res) => {
         const id = req.params.id;
-        const { nome, IdEndereco } = req.body;
+        const body = req.body;
         const exists = await ValidacaoServices.validarExistenciaUnidade(id);
-        const isValid = ValidacaoServices.validaCamposUnidade(nome, IdEndereco);
+        const isValid = ValidacaoServices.validaCamposUnidade(body.NOME, body.ID_ENDERECO);
 
         if (exists) {
             if (isValid) {
-                const unidadeModelada = new UnidadesModel(nome, IdEndereco);
+                const unidadeModelada = new UnidadesModel(body.NOME, body.ID_ENDERECO);
                 UnidadesDAO.atualizarUnidadePorId(id, unidadeModelada);
                 res.status(204).json();
             } else {
