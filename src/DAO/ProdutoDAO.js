@@ -1,68 +1,82 @@
-import ProdutoModel from "../models/ProdutoModel.js";
-import DAO from "./DAO.js";
+import ProdutoModel from "../models/ProdutoModel.js"
+import DAO from "./DAO.js"
 
-class ProdutoDAO extends DAO {
+class ProdutosDAO extends DAO {
     /**
-     * Método de inserção de dados da tabela Produtos
+     * Método de inserção de dados da tabela Produto
      * @param {ProdutoModel} data 
      */
     static async inserirProduto(data) {
-        const dataValues = Object.values(data);
+        const dataValues = Object.values(data)
         const query = `
-        INSERT INTO PRODUTOS (NOME, PRECO, CATEGORIA) VALUES (?,?,?)
-        `;
-        const result = await this.inserir(query, dataValues);
-        return result;
+        INSERT INTO PRODUTO (NOME, DESCRICAO, PRECO, QTDESTOQUE, EMAIL_ARTESAO) VALUES (?,?,?,?,?)
+        `
+        const result = await this.inserir(query, dataValues)
+        return result
     }
 
     /**
      * Método que retorna todos os registros da tabela Produtos
-     * @returns {Array<ProdutoModel>}
+     * @returns {Array<ProdutosModel>}
      */
     static async buscarTodosOsProdutos() {
         const query = `
-        SELECT * FROM PRODUTOS
-        `;
+      SELECT * FROM PRODUTO
+      `;
         const result = await this.buscar(query);
         return result;
     }
 
     /**
-     * Método de busca de registros específicos na tabela Produtos através de um identificador
-     * @param {string} id 
-     * @returns {ProdutoModel}
-     */
+      * Método de busca de registros específicos na tabela Produtos através de um identificador
+      * @param {string} id 
+      * @returns {ProdutosModel}
+      */
     static async buscarProdutoPorId(id) {
         const query = `
-        SELECT * FROM PRODUTOS WHERE ID_PRODUTO = ?
+        SELECT * FROM PRODUTO WHERE ID_PRODUTO = ?
         `;
         const result = await this.buscarPorId(query, [id]);
         return result;
     }
 
     /**
-     * Método de deleção de registros específicos na tabela Produtos através de um identificador
-     * @param {string} id 
-     */
+      * Método de busca de registros específicos na tabela Produtos através do Artesao
+      * @param {string} email
+      * @returns {ProdutosModel}
+      */
+    static async buscarProdutoPorArtesao(email) {
+        const query = `
+        SELECT * FROM PRODUTO WHERE EMAIL_ARTESAO = ?
+      `;
+        const result = await this.buscarProdutoPorEmailArtesao(query, [email]);
+        return result;
+    }
+
+    /**
+      * Método de deleção de registros específicos na tabela Produtos através de um identificador
+      * @param {string} id 
+      */
     static async deletarProdutoPorId(id) {
         const query = `
-        DELETE FROM PRODUTOS WHERE ID_PRODUTO = ?
-        `;
+        DELETE FROM PRODUTO WHERE ID_PRODUTO = ?
+      `;
         await this.deletarPorId(query, [id]);
     }
 
     /**
-     * Atualiza um registro específico da tabela Produtos através de um identificador
+     * Atualiza um registro específico da tabela Produto através de um identificador
      * @param {string} id 
      * @param {any} data 
-     */
+    */
     static async atualizarProdutoPorId(id, data) {
         const query = `
-        UPDATE PRODUTOS SET NOME = ?, PRECO = ?, CATEGORIA = ? WHERE ID_PRODUTO = ?
-        `;
-        const values = [data.nome, data.preco, data.categoria, id];
+      UPDATE PRODUTO SET NOME = ?, DESCRICAO = ?, PRECO = ?, QTDESTOQUE = ?, EMAIL_ARTESAO = ? WHERE ID_PRODUTO = ?
+      `;
+        const values = [data.nome, data.descricao, data.preco, data.qtdEstoque, data.emailArtesao, id];
         await this.atualizarPorId(query, values);
     }
+
 }
 
-export default ProdutoDAO;
+export default ProdutosDAO
