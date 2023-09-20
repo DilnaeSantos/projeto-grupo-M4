@@ -1,5 +1,5 @@
 import EnderecoModel from "../models/EnderecoModel.js";
-import EnderecosDAO from "../DAO/EnderecosDAO.js";
+import EnderecosDAO from "../DAO/EnderecoDAO.js";
 import ValidacaoServices from "../services/ValidacaoServices.js";
 
 class EnderecoController {

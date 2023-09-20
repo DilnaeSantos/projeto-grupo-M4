@@ -1,6 +1,6 @@
 import UnidadesModel from "../models/UnidadesModel.js";
 import ValidacaoServices from "../services/ValidacaoServices.js";
-import UnidadesDAO from "../DAO/UnidadesDAO.js";
+import UnidadesDAO from "../DAO/UnidadeDAO.js";
 
 class UnidadesController {
     /**
