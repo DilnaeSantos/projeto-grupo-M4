@@ -1,97 +1,70 @@
-import Database from "../database/Database.js";
+import UnidadesModel from "../models/UnidadesModel.js"
+import DAO from "./DAO.js"
 
-class DAO {
+class UnidadesDAO extends DAO {
+
     /**
-     * Método de inserção de Unidades
-     * @param {string} query 
-     * @param {Array<any>} data 
+     * Método de inserção de dados da tabela Usuários
+     * @param {UsuariosModel} data 
      */
-    static inserirUnidade(query, data) {
-        return new Promise((resolve, reject) => {
-            Database.run(query, data, (error) => {
-                if (error) {
-                    console.log(error);
-                    reject(error);
-                }
-                resolve({ error: false });
-            });
-        });
+    static async inserirUnidade(data) {
+        const dataValues = Object.values(data)
+        const query = `
+        INSERT INTO UNIDADE (NOME, ID_ENDERECO) VALUES (?,?)
+        `
+        const result = await this.inserir(query, dataValues)
+        return result
     }
 
     /**
-     * Método de busca de Unidades
-     * @param {string} query
-     * @returns {any}
+     * Método que retorna todos os registros da tabela Unidades
+     * @returns {Array<UnidadesModel>}
      */
-    static buscarUnidades(query) {
-        return new Promise((resolve, reject) => {
-            Database.all(query, (error, rows) => {
-                if (error) {
-                    console.log(error);
-                    reject(error);
-                } else {
-                    resolve(rows);
-                }
-            });
-        });
+    static async buscarTodasAsUnidades() {
+        const query = `
+        SELECT * FROM UNIDADE 
+        `;
+        const result = await this.buscar(query);
+        return result;
     }
 
     /**
-     * Método de busca de Unidade específica através de um identificador
-     * @param {string} query - A consulta SQL
-     * @param {id} id - Parâmetros da consulta
-     * @returns {any}
-     */
-    static buscarUnidadePorId(query, id) {
-        return new Promise((resolve, reject) => {
-            Database.get(query, id, (error, row) => {
-                if (error) {
-                    console.error(error);
-                    reject(error);
-                } else {
-                    resolve(row);
-                }
-            });
-        });
+      * Método de busca de registros específicos na tabela Unidade através de um identificador
+      * @param {string} id 
+      * @returns {UsuariosModel}
+      */
+    static async buscarUnidadePorId(id) {
+        const query = `
+        SELECT * FROM UNIDADE WHERE ID_UNIDADE = ?
+        `;
+        const result = await this.buscarPorId(query, [id]);
+        return result;
     }
 
     /**
-     * Método de deleção de Unidade específica
-     * @param {string} query - A consulta SQL
-     * @param {id} id - Parâmetros da consulta
-     * @returns {Promise<void>}
-     */
-    static deletarUnidadePorId(query, id) {
-        return new Promise((resolve, reject) => {
-            Database.run(query, id, function (error) {
-                if (error) {
-                    console.error(error);
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
+      * Método de deleção de registros específicos na tabela Unidades através de um identificador
+      * @param {string} id 
+      */
+    static async deletarUnidadePorId(id) {
+        const query = `
+        DELETE FROM UNIDADE WHERE ID_UNIDADE = ?
+        `;
+        await this.deletarPorId(query, [id]);
     }
 
     /**
-     * Atualiza um registro específico de Unidade na base de dados
-     * @param {string} query - A consulta SQL
-     * @param {string} id - Parâmetros da consulta
-     * @returns {Promise<void>}
-     */
-    static atualizarUnidadePorId(query, id) {
-        return new Promise((resolve, reject) => {
-            Database.run(query, id, function (error) {
-                if (error) {
-                    console.error(error);
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            });
-        });
+     * Atualiza um registro específico da tabela Usuários através de um identificador
+     * @param {string} id 
+     * @param {any} data 
+    */
+    static async atualizarUnidadePorId(id, data) {
+        const query = `
+        UPDATE UNIDADE SET NOME = ?, ID_ENDERECO = ? WHERE ID_UNIDADE = ?
+        `;
+        const values = [data.nome, data.idEndereco, id];
+        await this.atualizarPorId(query, values);
     }
+
 }
 
-export default DAO;
+export default UnidadesDAO
